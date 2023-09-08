@@ -13,7 +13,7 @@ export default async function generatePassword({
   // Convert master password and site to Uint8Array
   const textEncoder = new TextEncoder();
   const data = textEncoder.encode(masterPassword);
-  const salt = textEncoder.encode(site);
+  const salt = textEncoder.encode(site + config.modifier);
 
   // Generate cryptographic key from master password
   const key = await window.crypto.subtle.importKey(

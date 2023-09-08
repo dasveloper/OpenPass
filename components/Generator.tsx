@@ -25,7 +25,6 @@ import {
   IconClipboard,
   IconClipboardCheck,
   IconSettings,
-  IconSquareAsteriskFilled,
 } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -41,6 +40,7 @@ export default function Generator() {
         uppercase: true,
         numbers: true,
         symbols: true,
+        modifier: "",
       },
     },
   });
@@ -142,7 +142,6 @@ export default function Generator() {
                         input: {
                           width: 50,
                           textAlign: "center",
-                          marginLeft: "auto",
                         },
                       }}
                       {...form.getInputProps("config.length")}
@@ -182,6 +181,20 @@ export default function Generator() {
                       {...form.getInputProps("config.symbols", {
                         type: "checkbox",
                       })}
+                    />
+                  </Group>
+                  <Group position="apart" noWrap spacing="xl">
+                    <Text>Modifier</Text>
+                    <TextInput
+                      size="xs"
+                      min={8}
+                      styles={{
+                        input: {
+                          width: 50,
+                          textAlign: "center",
+                        },
+                      }}
+                      {...form.getInputProps("config.modifier")}
                     />
                   </Group>
                 </Stack>

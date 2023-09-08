@@ -7,5 +7,6 @@ type GeneratePassword = {
     numbers: boolean;
     symbols: boolean;
     length: number;
+    modifier: string;
   };
 };

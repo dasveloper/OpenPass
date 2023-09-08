@@ -1,9 +1,29 @@
-import { AppProps } from "next/app";
+import { useState } from "react";
+import NextApp, { AppProps, AppContext } from "next/app";
 import Head from "next/head";
-import { MantineProvider } from "@mantine/core";
+import { getCookie, setCookie } from "cookies-next";
+import {
+  MantineProvider,
+  ColorScheme,
+  ColorSchemeProvider,
+} from "@mantine/core";
 
-export default function App(props: AppProps) {
+const COLOR_SCHEME_COOKIE = "openpass-color-scheme";
+
+export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(
+    props.colorScheme
+  );
+
+  const toggleColorScheme = (value?: ColorScheme) => {
+    const nextColorScheme =
+      value || (colorScheme === "dark" ? "light" : "dark");
+    setColorScheme(nextColorScheme);
+    setCookie(COLOR_SCHEME_COOKIE, nextColorScheme, {
+      maxAge: 60 * 60 * 24 * 30,
+    });
+  };
 
   return (
     <>
@@ -15,15 +35,26 @@ export default function App(props: AppProps) {
         />
       </Head>
 
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          colorScheme: "light",
-        }}
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
       >
-        <Component {...pageProps} />
-      </MantineProvider>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{ colorScheme }}
+        >
+          <Component {...pageProps} />
+        </MantineProvider>
+      </ColorSchemeProvider>
     </>
   );
 }
+
+App.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await NextApp.getInitialProps(appContext);
+  return {
+    ...appProps,
+    colorScheme: getCookie(COLOR_SCHEME_COOKIE, appContext.ctx) || "light",
+  };
+};

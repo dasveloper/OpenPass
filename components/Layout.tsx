@@ -6,6 +6,7 @@ import {
   Footer,
   Container,
   ActionIcon,
+  ThemeIcon,
 } from "@mantine/core";
 import {
   Switch,
@@ -13,7 +14,12 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from "@mantine/core";
-import { IconSun, IconMoonStars, IconBrandGithub } from "@tabler/icons-react";
+import {
+  IconSun,
+  IconMoonStars,
+  IconBrandGithub,
+  IconSquareAsteriskFilled,
+} from "@tabler/icons-react";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -23,7 +29,10 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Header height="auto" p="sm">
         <Container>
           <Group position="apart">
-            <Text inline>OpenPass Logo</Text>
+            <ThemeIcon color="dark">
+              <IconSquareAsteriskFilled />
+            </ThemeIcon>
+
             <Switch
               checked={colorScheme === "dark"}
               onChange={() => toggleColorScheme()}

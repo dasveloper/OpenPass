@@ -7,6 +7,7 @@ import {
   ColorScheme,
   ColorSchemeProvider,
 } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 
 const COLOR_SCHEME_COOKIE = "openpass-color-scheme";
 
@@ -44,6 +45,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           withNormalizeCSS
           theme={{ colorScheme }}
         >
+          <Notifications position="bottom-center" zIndex={2077} />
           <Component {...pageProps} />
         </MantineProvider>
       </ColorSchemeProvider>
